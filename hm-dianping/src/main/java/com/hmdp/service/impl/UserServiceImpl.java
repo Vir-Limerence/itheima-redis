@@ -78,8 +78,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         if(RegexUtils.isPhoneInvalid(phone)){
             return Result.fail("手机号格式错误！");
         }
-        //2.校验验证码
-        String code = (String) session.getAttribute("code");
+        //2.redis获取验证码
+        String code = stringRedisTemplate.opsForValue().get(RedisConstants.LOGIN_CODE_KEY + phone);
         if(code==null || !code.equals(loginForm.getCode())){
             return Result.fail("验证码错误！");
         }
