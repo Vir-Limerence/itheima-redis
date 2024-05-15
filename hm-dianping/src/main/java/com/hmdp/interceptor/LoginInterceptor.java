@@ -6,7 +6,9 @@ import com.hmdp.dto.UserDTO;
 import com.hmdp.entity.User;
 import com.hmdp.utils.RedisConstants;
 import com.hmdp.utils.UserHolder;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.core.annotation.Order;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -19,43 +21,20 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author MaQi
  */
+@Slf4j
 public class LoginInterceptor implements HandlerInterceptor {
-
-    private StringRedisTemplate stringRedisTemplate;
-
-    public LoginInterceptor(StringRedisTemplate stringRedisTemplate){
-        this.stringRedisTemplate = stringRedisTemplate;
-    }
-
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        //1.获取token
-        String token = request.getHeader("authorization");
-        if(token==null){
-            //如果不存在，则拦截，返回状态码401
+        //1.获取ThreadLocal
+        UserDTO userDTO = UserHolder.getUser();
+        if (userDTO==null){
+            //如果无法查找到用户，拦截，返回401
             response.setStatus(401);
             return false;
         }
-        //2.获取redis中的用户
-        String key = RedisConstants.LOGIN_USER_KEY + token;
-        Map<Object, Object> userMap = stringRedisTemplate.opsForHash().entries(key);
-        //3.判断用户是否存在，不存在，则拦截
-        if(userMap.isEmpty()){
-            response.setStatus(401);
-            return false;
-        }
-        //4.将拿到的Map对象转换为UserDTO对象
-        UserDTO userDTO = BeanUtil.fillBeanWithMap(userMap, new UserDTO(), false);
-        //5.保存用户信息到ThreadLocal
-        UserHolder.saveUser(userDTO);
-        //6.刷新token的有效期
-        stringRedisTemplate.expire(key, RedisConstants.CACHE_SHOP_TTL, TimeUnit.MINUTES);
+        //2.有用户，则放行
         return true;
     }
 
-    @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        //避免内存泄露
-        UserHolder.removeUser();
-    }
+
 }
