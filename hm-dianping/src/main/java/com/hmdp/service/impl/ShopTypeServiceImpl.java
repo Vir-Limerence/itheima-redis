@@ -46,7 +46,7 @@ public class ShopTypeServiceImpl extends ServiceImpl<ShopTypeMapper, ShopType> i
         //3.如果为空，则查询数据库
         List<ShopType> typeList = query().orderByAsc("sort").list();
         //4.如果数据库为空，返回错误
-        if(typeList==null || typeList.isEmpty()){
+        if(typeList.isEmpty()){
             return Result.fail("商铺类型数据不存在！");
         }
         //5.将查询到的数据存入Redis数据库
