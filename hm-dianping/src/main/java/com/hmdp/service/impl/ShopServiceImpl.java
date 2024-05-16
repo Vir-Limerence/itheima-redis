@@ -1,5 +1,6 @@
 package com.hmdp.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.hmdp.dto.Result;
 import com.hmdp.entity.Shop;
@@ -38,15 +39,22 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IS
         String key = RedisConstants.CACHE_SHOP_KEY + id;
         String shopJson = stringRedisTemplate.opsForValue().get(key);
         //2.判断是否存在
-        if(shopJson!=null){
+        if(StrUtil.isNotBlank(shopJson)){
             //3.存在，直接返回
             Shop shop = JSONUtil.toBean(shopJson, Shop.class);
             return Result.ok(shop);
+        }
+        //判断如果是空字符串
+        if (shopJson!=null){
+            //返回错误信息
+            return Result.fail("店铺不存在！");
         }
         //4.不存在，查询数据库
         Shop shop = getById(id);
         //5.判断是否查到
         if(shop==null){
+            stringRedisTemplate.opsForValue().set(key, "");
+            stringRedisTemplate.expire(key, RedisConstants.CACHE_NULL_TTL, TimeUnit.MINUTES);
             return Result.fail("店铺不存在！");
         }
         //6.如果存在，将数据写入redis缓存
