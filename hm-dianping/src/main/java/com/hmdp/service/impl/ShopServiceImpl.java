@@ -1,5 +1,6 @@
 package com.hmdp.service.impl;
 
+import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.hmdp.dto.Result;
@@ -13,6 +14,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -54,13 +56,13 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IS
         //5.判断是否查到
         if(shop==null){
             stringRedisTemplate.opsForValue().set(key, "");
-            stringRedisTemplate.expire(key, RedisConstants.CACHE_NULL_TTL, TimeUnit.MINUTES);
+            stringRedisTemplate.expire(key, RedisConstants.CACHE_NULL_TTL + RandomUtil.randomLong(1,3), TimeUnit.MINUTES);
             return Result.fail("店铺不存在！");
         }
         //6.如果存在，将数据写入redis缓存
         shopJson = JSONUtil.toJsonStr(shop);
         stringRedisTemplate.opsForValue().set(key, shopJson);
-        stringRedisTemplate.expire(key, RedisConstants.CACHE_SHOP_TTL, TimeUnit.MINUTES);
+        stringRedisTemplate.expire(key, RedisConstants.CACHE_SHOP_TTL + RandomUtil.randomLong(3,10), TimeUnit.MINUTES);
         return Result.ok(shopJson);
     }
 
