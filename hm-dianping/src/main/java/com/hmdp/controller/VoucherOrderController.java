@@ -35,7 +35,6 @@ public class VoucherOrderController {
     @PostMapping("seckill/{id}")
     @ApiOperation("优惠券秒杀下单")
     public Result seckillVoucher(@PathVariable("id") Long voucherId) {
-
         return voucherOrderService.seckillVoucher(voucherId);
     }
 }
