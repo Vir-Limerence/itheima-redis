@@ -7,11 +7,13 @@ public class RedisConstants {
     public static final Long LOGIN_USER_TTL = 36000L;
 
     public static final Long CACHE_NULL_TTL = 2L;
+    public static final String CACHE_NULL_VALUE = "";
 
     public static final Long CACHE_SHOP_TTL = 30L;
     public static final String CACHE_SHOP_KEY = "cache:shop:";
 
     public static final String LOCK_SHOP_KEY = "lock:shop:";
+    public static final String LOCK_SHOP_VALUE = "1";
     public static final Long LOCK_SHOP_TTL = 10L;
 
     public static final String SECKILL_STOCK_KEY = "seckill:stock:";
@@ -21,4 +23,6 @@ public class RedisConstants {
     public static final String USER_SIGN_KEY = "sign:";
 
     public static final String CACHE_SHOP_TYPE_KEY = "cache:shoptype";
+
+    public static final Long SLEEP_GET_SHOP = 20L;
 }

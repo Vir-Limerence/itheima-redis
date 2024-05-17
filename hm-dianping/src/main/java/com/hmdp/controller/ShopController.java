@@ -7,6 +7,8 @@ import com.hmdp.dto.Result;
 import com.hmdp.entity.Shop;
 import com.hmdp.service.IShopService;
 import com.hmdp.utils.SystemConstants;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -21,6 +23,7 @@ import javax.annotation.Resource;
  */
 @RestController
 @RequestMapping("/shop")
+@Api(tags = "商铺接口管理")
 public class ShopController {
 
     @Resource
@@ -32,6 +35,7 @@ public class ShopController {
      * @return 商铺详情数据
      */
     @GetMapping("/{id}")
+    @ApiOperation("根据id查询商铺信息")
     public Result queryShopById(@PathVariable("id") Long id) {
         return shopService.queryById(id);
     }
@@ -42,6 +46,7 @@ public class ShopController {
      * @return 商铺id
      */
     @PostMapping
+    @ApiOperation("新增商铺信息")
     public Result saveShop(@RequestBody Shop shop) {
         // 写入数据库
         shopService.save(shop);
@@ -55,6 +60,7 @@ public class ShopController {
      * @return 无
      */
     @PutMapping
+    @ApiOperation("更新商铺信息")
     public Result updateShop(@RequestBody Shop shop) {
         // 写入数据库
 
@@ -68,6 +74,7 @@ public class ShopController {
      * @return 商铺列表
      */
     @GetMapping("/of/type")
+    @ApiOperation("根据商铺类型分页查询商铺信息")
     public Result queryShopByType(
             @RequestParam("typeId") Integer typeId,
             @RequestParam(value = "current", defaultValue = "1") Integer current
@@ -87,6 +94,7 @@ public class ShopController {
      * @return 商铺列表
      */
     @GetMapping("/of/name")
+    @ApiOperation("根据商铺名称关键字分页查询商铺信息")
     public Result queryShopByName(
             @RequestParam(value = "name", required = false) String name,
             @RequestParam(value = "current", defaultValue = "1") Integer current
