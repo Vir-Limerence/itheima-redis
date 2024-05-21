@@ -6,8 +6,10 @@
 -- 1.定义变量
 -- 1.1 优惠券id
 local voucherId = ARGV[1]
+-- 1.2 用户id
 local userId = ARGV[2]
-
+-- 1.3 订单id
+local orderId = ARGV[3]
 -- 2. 数据key
 -- 2.1 库存key
 local stockKey = 'seckill:stock:' .. voucherId
@@ -30,4 +32,6 @@ end
 redis.call('incrby', stockKey, -1);
 -- 3.5将userId存入当前优惠券的set集合
 redis.call('sadd', orderKey, userId);
+-- 3.6 发送订单信息到消息队列
+redis.call('xadd', 'stream.orders', '*', 'voucherId', voucherId, 'userId', userId, 'id', orderId)
 return 0
