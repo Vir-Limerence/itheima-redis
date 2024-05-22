@@ -72,6 +72,8 @@ public class VoucherOrderServiceImpl extends ServiceImpl<VoucherOrderMapper, Vou
         private final static String queueName = "stream.orders";
          @Override
         public void run(){
+             //创建消费者组
+             stringRedisTemplate.opsForStream().createGroup(queueName, ReadOffset.from("0"), "g1");
              while(true){
                  try {
                      //1.获取队列中的订单信息 XREADGROUP GROUP g1 c1 COUNT 1 BLOCK 2000 STREAMS stream.orders >

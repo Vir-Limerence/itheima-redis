@@ -32,4 +32,12 @@ public interface IUserService extends IService<User> {
      * @return {@link Result }
      */
     Result login(LoginFormDTO loginForm, HttpSession session);
+
+    /**
+     * 根据id查询用户信息
+     * @param id
+     * @return {@link Result }
+     */
+    Result queryUserById(Long id);
+
 }
