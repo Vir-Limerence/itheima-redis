@@ -5,6 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import com.hmdp.dto.Result;
 import com.hmdp.utils.SystemConstants;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,7 +20,13 @@ import java.util.UUID;
 @Api(tags = "上传接口管理")
 public class UploadController {
 
+    /**
+     * 上传图片
+     * @param image
+     * @return {@link Result }
+     */
     @PostMapping("blog")
+    @ApiOperation("上传图片")
     public Result uploadImage(@RequestParam("file") MultipartFile image) {
         try {
             // 获取原始文件名称

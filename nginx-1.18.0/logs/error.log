@@ -3003,3 +3003,17 @@
 2024/05/18 20:14:21 [error] 85736#23388: *34813 CreateFile() "E:\JAVA\spring-redis\nginx-1.18.0/html/hmdp/js/axios.min.map" failed (2: The system cannot find the file specified), client: 127.0.0.1, server: localhost, request: "GET /js/axios.min.map HTTP/1.1", host: "localhost:8080"
 2024/05/18 20:14:22 [error] 85736#23388: *34812 CreateFile() "E:\JAVA\spring-redis\nginx-1.18.0/html/hmdp/js/axios.min.map" failed (2: The system cannot find the file specified), client: 127.0.0.1, server: localhost, request: "GET /js/axios.min.map HTTP/1.1", host: "localhost:8080"
 2024/05/18 20:14:40 [error] 85736#23388: *34810 CreateFile() "E:\JAVA\spring-redis\nginx-1.18.0/html/hmdp/js/axios.min.map" failed (2: The system cannot find the file specified), client: 127.0.0.1, server: localhost, request: "GET /js/axios.min.map HTTP/1.1", host: "localhost:8080"
+2024/05/21 20:34:05 [notice] 16784#84164: signal process started
+2024/05/21 20:34:05 [error] 16784#84164: OpenEvent("Global\ngx_reload_39552") failed (2: The system cannot find the file specified)
+2024/05/21 20:34:17 [notice] 19596#83920: signal process started
+2024/05/21 20:34:17 [error] 19596#83920: OpenEvent("Global\ngx_reload_39552") failed (2: The system cannot find the file specified)
+2024/05/21 20:35:33 [notice] 65540#58992: signal process started
+2024/05/21 20:35:33 [error] 65540#58992: OpenEvent("Global\ngx_stop_39552") failed (2: The system cannot find the file specified)
+2024/05/21 20:35:47 [notice] 46332#82056: signal process started
+2024/05/21 20:35:47 [error] 46332#82056: OpenEvent("Global\ngx_stop_39552") failed (2: The system cannot find the file specified)
+2024/05/21 20:40:08 [notice] 19692#34416: signal process started
+2024/05/21 20:40:08 [error] 19692#34416: OpenEvent("Global\ngx_reload_39552") failed (2: The system cannot find the file specified)
+2024/05/21 20:40:47 [notice] 27716#20256: signal process started
+2024/05/21 20:40:47 [error] 27716#20256: OpenEvent("Global\ngx_quit_39552") failed (2: The system cannot find the file specified)
+2024/05/21 20:42:54 [notice] 41996#40164: signal process started
+2024/05/21 20:42:54 [error] 41996#40164: OpenEvent("Global\ngx_reload_39552") failed (2: The system cannot find the file specified)
