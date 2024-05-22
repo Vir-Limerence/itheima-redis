@@ -49,4 +49,26 @@ public interface IBlogService extends IService<Blog> {
      * @return {@link Result }
      */
     Result queryBlogByUserId(Integer current, Long id);
+
+    /**
+     * 新增笔记
+     * @param blog
+     * @return {@link Result }
+     */
+    Result saveBlog(Blog blog);
+
+    /**
+     * 分页查询用户笔记
+     * @param current
+     * @return {@link Result }
+     */
+    Result queryMyBlog(Integer current);
+
+    /**
+     * 查询收件箱中的笔记
+     * @param max
+     * @param offset
+     * @return {@link Result }
+     */
+    Result queryBlogOffFollow(Long max, Integer offset);
 }

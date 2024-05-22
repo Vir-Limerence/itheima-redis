@@ -36,15 +36,14 @@ public class BlogController {
     private IBlogService blogService;
 
 
+    /**
+     * 新增笔记
+     * @param blog
+     * @return {@link Result }
+     */
     @PostMapping
     public Result saveBlog(@RequestBody Blog blog) {
-        // 获取登录用户
-        UserDTO user = UserHolder.getUser();
-        blog.setUserId(user.getId());
-        // 保存探店博文
-        blogService.save(blog);
-        // 返回id
-        return Result.ok(blog.getId());
+        return blogService.saveBlog(blog);
     }
 
     /**
@@ -58,16 +57,14 @@ public class BlogController {
         return blogService.likeBlog(id);
     }
 
+    /**
+     * 分页查询用户笔记
+     * @param current
+     * @return {@link Result }
+     */
     @GetMapping("/of/me")
     public Result queryMyBlog(@RequestParam(value = "current", defaultValue = "1") Integer current) {
-        // 获取登录用户
-        UserDTO user = UserHolder.getUser();
-        // 根据用户查询
-        Page<Blog> page = blogService.query()
-                .eq("user_id", user.getId()).page(new Page<>(current, SystemConstants.MAX_PAGE_SIZE));
-        // 获取当前页数据
-        List<Blog> records = page.getRecords();
-        return Result.ok(records);
+        return blogService.queryMyBlog(current);
     }
 
     /**
@@ -113,5 +110,18 @@ public class BlogController {
             @RequestParam(value = "current", defaultValue = "1") Integer current,
             @RequestParam("id") Long id){
         return blogService.queryBlogByUserId(current, id);
+    }
+
+    /**
+     * 查询收件箱中的笔记
+     * @param max
+     * @param offset
+     * @return {@link Result }
+     */
+    @GetMapping("/of/follow")
+    public Result queryBlogOffFollow(
+            @RequestParam("lastId") Long max,
+            @RequestParam(value = "offset", defaultValue = "0")Integer offset){
+        return blogService.queryBlogOffFollow(max, offset);
     }
 }
