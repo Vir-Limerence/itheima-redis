@@ -126,6 +126,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         return Result.ok(userDTO);
     }
 
+
     private User createUserWithPhone(String phone) {
         String nickName = "user_"+RandomUtil.randomString(10);
         User user = User.builder()
@@ -136,5 +137,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         //存储到数据库
         save(user);
         return user;
+    }
+
+
+    /**
+     * 登出功能
+     * @return {@link Result }
+     */
+    @Override
+    public Result logout(String token) {
+        //从redis中删除token
+        String key = RedisConstants.LOGIN_USER_KEY + token;
+        Boolean isSuccess = stringRedisTemplate.delete(key);
+        if(!isSuccess){
+            return Result.fail("登出失败！");
+        }
+        return Result.ok();
     }
 }

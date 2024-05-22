@@ -40,4 +40,11 @@ public interface IUserService extends IService<User> {
      */
     Result queryUserById(Long id);
 
+
+    /**
+     * 登出功能
+     * @param token
+     * @return {@link Result }
+     */
+    Result logout(String token);
 }
