@@ -115,4 +115,24 @@ public class UserController {
         return userService.queryUserById(id);
     }
 
+    /**
+     * 用户签到
+     * @return {@link Result }
+     */
+    @PostMapping("/sign")
+    @ApiOperation("用户签到")
+    public Result sign(){
+        return userService.sign();
+    }
+
+    /**
+     * 统计用户当月连续签到天数
+     * @return {@link Result }
+     */
+    @GetMapping("/sign/count")
+    @ApiOperation("统计用户当月连续签到天数")
+    public Result signCount(){
+        return userService.signCount();
+    }
+
 }
